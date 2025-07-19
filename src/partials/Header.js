@@ -9,7 +9,9 @@ import {
   InputBase
 } from '@mui/material'
 
-import MenuIcon from '@mui/icons-material/Menu'
+
+import SideBar from '../components/Sidebar'
+
 import SearchIcon from '@mui/icons-material/Search'
 
 import '../styles/index.css'
@@ -56,9 +58,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }))
 
-const Header = () => {
+const Header = ({ onSelectGenre }) => {
   return (
     <Box sx={{ flexGrow: 1 }}>
+      
       <AppBar position="static">
         <Toolbar>
           <IconButton
@@ -68,7 +71,7 @@ const Header = () => {
             aria-label="open drawer"
             sx={{ mr: 2 }}
           >
-            <MenuIcon />
+          <SideBar onSelectGenre={onSelectGenre} />
           </IconButton>
           <Typography
             variant="h6"
