@@ -1,3 +1,7 @@
+import { useContext } from 'react'
+import { useNavigate } from 'react-router'
+import { AnimeContext } from '../contexts/AnimeContext'
+
 import {
   styled,
   alpha,
@@ -9,6 +13,7 @@ import {
   InputBase
 } from '@mui/material'
 
+import axios from 'axios'
 
 import SideBar from '../components/Sidebar'
 
@@ -59,9 +64,39 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }))
 
 const Header = ({ onSelectGenre }) => {
+
+  const { setAnimes } = useContext(AnimeContext)
+
+  const config = {
+    headers: {
+      'Accept': 'application/vnd.api+json',
+      'Content-Type': 'application/vnd.api+json'
+    }
+  }
+
+  const navigate = useNavigate()
+
+  function handleSearch(animeName, key) {
+
+    const keyPressed = key
+
+    if (keyPressed === 'Enter') {
+      if (animeName) {
+        axios.get(`https://kitsu.io/api/edge/anime?filter[text]=${animeName}&page[limit]=20`, config)
+          .then(response => {
+            const { data } = response.data
+            setAnimes(data)
+            navigate('/results')
+          })
+      }
+    }
+
+  }
+
+
   return (
     <Box sx={{ flexGrow: 1 }}>
-      
+
       <AppBar position="static">
         <Toolbar>
           <IconButton
@@ -71,7 +106,7 @@ const Header = ({ onSelectGenre }) => {
             aria-label="open drawer"
             sx={{ mr: 2 }}
           >
-          <SideBar onSelectGenre={onSelectGenre} />
+            <SideBar onSelectGenre={onSelectGenre} />
           </IconButton>
           <Typography
             variant="h6"
@@ -81,7 +116,7 @@ const Header = ({ onSelectGenre }) => {
           >
             MUI
           </Typography>
-          <Search>
+          <Search onKeyUp={(e) => handleSearch(e.target.value, e.key)}>
             <SearchIconWrapper>
               <SearchIcon />
             </SearchIconWrapper>
