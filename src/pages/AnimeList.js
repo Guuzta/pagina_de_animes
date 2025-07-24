@@ -28,6 +28,7 @@ const AnimeList = () => {
                                     title={anime.attributes.canonicalTitle}
                                     synopsis={anime.attributes.synopsis}
                                     posterImage={anime.attributes.posterImage.small}
+                                    coverImage={anime.attributes.coverImage?.small}
                                 />
                             </Grid>
                         ))

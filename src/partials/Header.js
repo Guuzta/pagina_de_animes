@@ -114,7 +114,7 @@ const Header = ({ onSelectGenre }) => {
             component="div"
             sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
           >
-            MUI
+            ANIMES
           </Typography>
           <Search onKeyUp={(e) => handleSearch(e.target.value, e.key)}>
             <SearchIconWrapper>
